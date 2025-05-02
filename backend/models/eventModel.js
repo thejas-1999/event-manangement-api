@@ -12,6 +12,12 @@ const eventSchema = new mongoose.Schema({
   date: {
     type: Date,
     required: true,
+    validate: {
+      validator: function (value) {
+        return value.getTime() > Date.now();
+      },
+      message: "Event date must be in the future",
+    },
   },
 });
 
