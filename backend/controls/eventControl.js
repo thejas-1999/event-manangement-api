@@ -27,7 +27,7 @@ const createEvent = async (req, res) => {
 };
 
 //@desc get all events
-//@route POST /api/events
+//@route GET /api/events
 //@access Public
 const getEvents = async (req, res) => {
   try {
@@ -39,7 +39,7 @@ const getEvents = async (req, res) => {
 };
 
 //@desc get  event by id
-//@route POST /api/events/:id
+//@route GET /api/events/:id
 //@access Public
 const getEventById = async (req, res) => {
   try {
@@ -52,4 +52,26 @@ const getEventById = async (req, res) => {
   }
 };
 
-export { createEvent, getEvents, getEventById };
+//@desc get  event by id
+//@route PUT /api/events/:id
+//@access Public
+const updateEvent = async (req, res) => {
+  try {
+    const { title, description, date } = req.body;
+
+    const updatedEvent = await Event.findByIdAndUpdate(
+      req.params.id,
+      { title, description, date },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedEvent)
+      return res.status(404).json({ message: "Event not found" });
+
+    res.json(updatedEvent);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export { createEvent, getEvents, getEventById, updateEvent };
