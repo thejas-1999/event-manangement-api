@@ -26,4 +26,16 @@ const createEvent = async (req, res) => {
   }
 };
 
-export { createEvent };
+//@desc get all events
+//@route POST /api/events
+//@access Public
+const getEvents = async (req, res) => {
+  try {
+    const events = await Event.find();
+    res.json(events);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export { createEvent, getEvents };
