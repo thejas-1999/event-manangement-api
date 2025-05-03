@@ -52,7 +52,7 @@ const getEventById = async (req, res) => {
   }
 };
 
-//@desc get event by id
+//@desc update event
 //@route PUT /api/events/:id
 //@access Public
 const updateEvent = async (req, res) => {
