@@ -52,7 +52,7 @@ const getEventById = async (req, res) => {
   }
 };
 
-//@desc get  event by id
+//@desc get event by id
 //@route PUT /api/events/:id
 //@access Public
 const updateEvent = async (req, res) => {
@@ -74,4 +74,19 @@ const updateEvent = async (req, res) => {
   }
 };
 
-export { createEvent, getEvents, getEventById, updateEvent };
+//@desc delete event
+//@route DELETE /api/events/:id
+//@access Public
+
+const deleteEvent = async (req, res) => {
+  try {
+    const deleted = await Event.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ message: "Event not found" });
+
+    res.json({ message: "Event deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export { createEvent, getEvents, getEventById, updateEvent, deleteEvent };
