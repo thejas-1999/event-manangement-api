@@ -38,4 +38,18 @@ const getEvents = async (req, res) => {
   }
 };
 
-export { createEvent, getEvents };
+//@desc get  event by id
+//@route POST /api/events/:id
+//@access Public
+const getEventById = async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.id);
+    if (!event) return res.status(404).json({ message: "Event not found" });
+
+    res.json(event);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export { createEvent, getEvents, getEventById };
